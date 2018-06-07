@@ -2,14 +2,10 @@
   "name": "generieke-demo-app",
   "version": "1.0.0",
   "description": "Server",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
 		"start" : "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://gitlab.ovsoftware.com/demo-app/app-backend.git"
   },
   "author": "",
   "license": "ISC",
