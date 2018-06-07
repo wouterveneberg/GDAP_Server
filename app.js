@@ -16,7 +16,7 @@ app.post('/application', function (req, res) {
   MongoClient.connect(getConnection(), function(err, client) {
     assert.equal(null, err); //Checks if something went wrong.
 
-    var db = client.db('DemoApp');
+    var db = client.db('gdap_db');
 
     if(client.isConnected()) {
       //Check if application name already exists, so yes update else insert new application.
@@ -51,12 +51,12 @@ app.get("/application/:name", function(req, res) {
   MongoClient.connect(getConnection(), function(err, client) {
     assert.equal(null, err);
 
-    var db = client.db('DemoApp');
+    var db = client.db('gdap_db');
     
     if(client.isConnected()) {
       db.collection("Applications").findOne({"appName": decodeURI(req.params.name)}, function(err1, result) {
         if(err1) {
-          console.log('Error occurred while retrieving application');
+          console.log(err1);
           res.status(406);
           res.send("Couldn't retrieve application");
         } else {
@@ -78,15 +78,17 @@ app.get("/application/:name", function(req, res) {
  */
 app.get("/application", function(req, res) {
   MongoClient.connect(getConnection(), function(err, client) {
-    assert.equal(null, err);
+    if(err) {
+			console.log(err);
+		}
 
-    var db = client.db('DemoApp');
+    var db = client.db('gdap_db');
     //var names = [];
     
     if(client.isConnected()) {
       db.collection("Applications").find().project({appName: 1, _id:0}).toArray(function(err1, result) {
         if(err1) {
-          console.log('Error occurred while retrieving application');
+          console.log(err1);
           res.status(406);
           res.send("Couldn't retrieve application");
         } else {
@@ -110,8 +112,7 @@ app.get("/", function(req, res) {
   MongoClient.connect(getConnection(), function(err, client) {
     assert.equal(null, err);
 
-    var db = client.db('DemoApp');
-    //var names = [];
+    var db = client.db('gdap_db');
     
     if(client.isConnected()) {
       db.collection("Applications").find().toArray(function(err1, result) {
@@ -139,5 +140,7 @@ var server = app.listen(8080, function(){
 });
 
 function getConnection(){
-  return 'mongodb://localhost:27017';
+  //return 'mongodb://localhost:27017';
+//	return 'mongodb://uriiogosljlvh2d:tIqgSDAEP9qbWr2Wk9Nq@begdmvi5aoj7y7l-mongodb.services.clever-cloud.com:27017/begdmvi5aoj7y7l';
+	return 'mongodb://gdap_admin:admin123@ds147190.mlab.com:47190/gdap_db';
 }
