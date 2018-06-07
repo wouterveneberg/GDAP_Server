@@ -22,7 +22,7 @@ MongoClient.connect(getConnection(), function(err, client) {
   console.log("Database connection ready");
 
   // Initialize the app.
-  var server = app.listen(8080, function () {
+  var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
     console.log("App now running on port", port);
   });
